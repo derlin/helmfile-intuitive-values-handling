@@ -1,0 +1,11 @@
+globals:
+  commonLabels:
+    env: prod
+
+foo-mysql:
+  auth:
+    password: very-strong-password-for-foo
+
+bar-mysql:
+  auth:
+    password: very-strong-password-for-bar

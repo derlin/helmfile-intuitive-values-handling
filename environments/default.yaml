@@ -1,0 +1,16 @@
+globals:
+  commonLabels:
+    project: helmfile-values-example
+    env: default
+
+foo-mysql:
+  auth:
+    database: foo
+    username: foo
+    password: foo
+
+bar-mysql:
+  auth:
+    database: bar
+    username: bar
+    password: bar

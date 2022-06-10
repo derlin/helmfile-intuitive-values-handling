@@ -1,0 +1,35 @@
+repositories:
+  - name: bitnami
+    url: https://charts.bitnami.com/bitnami
+
+releases:
+  - name: nginx
+    chart: bitnami/nginx
+    version: 12.0.4
+    values:
+      - &env env-magic.gotmpl
+
+  - name: foo-mysql
+    chart: bitnami/mysql
+    version: 9.1.6
+    values:
+      - *env
+
+  - name: bar-mysql
+    chart: bitnami/mysql
+    version: 9.1.6
+    values:
+      - *env
+
+environments:
+  default:
+    values:
+      - environments/default.yaml
+  local:
+    values:
+      - environments/default.yaml
+      - environments/local.yaml
+  prod:
+    values:
+      - environments/default.yaml
+      - environments/prod.yaml

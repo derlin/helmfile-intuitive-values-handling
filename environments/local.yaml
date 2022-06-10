@@ -1,0 +1,6 @@
+globals:
+  commonLabels:
+    env: local
+
+  image:
+    debug: true
