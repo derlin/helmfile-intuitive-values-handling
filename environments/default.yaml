@@ -1,4 +1,4 @@
-globals:
+global:
   commonLabels:
     project: helmfile-values-example
     env: default
