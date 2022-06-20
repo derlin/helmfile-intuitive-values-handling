@@ -1,7 +1,11 @@
-# Example: a simple way to handle values in helmfile
+# How to handle helmfile values nicely
 
-[helmfile](https://github.com/helmfile/helmfile) is a very powerful tool, but his way of handling release values is daunting for the beginners (and experts).
-This repo proposes a simple pattern to handle values, that is completely generic and works in all situations.
+[helmfile](https://github.com/helmfile/helmfile) is a very powerful tool, but his way of handling release values is daunting for the beginners (and experts). I propose here a simple pattern to handle values, that is completely generic, intuitive and works in all situations.
+
+<p align=center>
+ <b>Read the article ! </b><br>
+ <a href="https://community.ops.io/derlin/helmfile-a-simple-trick-to-handle-values-intuitively-50cb"><b> 👉 ✨ helmfile: a simple trick to handle values intuitively ✨ 👈</b></a>
+</center>
 
 ## TL;DR
 
@@ -125,6 +129,26 @@ For this pattern to work:
 1. all environments must reference `environments/default.yaml`, plus their specific file. This is also necessary for the default environment ! However, in this case, only the default file is listed.
 2. all releases must reference `env-magic.gotmpl` in their `values`. To simplify and keep it DRY, you can use YAML anchors (see the example `helmfile.yaml`).
 
+That is, you should have something like this:
+```yaml
+releases:
+  - name: foo
+    # ...
+    values:                    # this block should be under all releases
+      - &env env-magic.gotmpl  # <- the magic
+
+environments:
+  default:
+    values:
+      - environments/default.yaml  # always reference the default values files
+  prod:
+    values:
+      - environments/default.yaml
+      - environments/prod.yaml     # apply prod values on top of default
+```
+
+Note that the actual name of the files do not matter, of course.
+
 ### How it works
 
 All the magic comes from the `env-magic.gotmpl` file, which consists of one single line:
@@ -134,4 +158,4 @@ All the magic comes from the `env-magic.gotmpl` file, which consists of one sing
 
 Since helmfile merges environment values and normal values automatically and makes them available through `.Values` in templates, the only thing left to do is to select only the values for the current release (`.Release.Name`),
 and the global values (`global`). We then merge the two, giving precedence to the release-specific values, 
-and render them as YAML.
+and render them as YAML.](https://community.ops.io/derlin/helmfile-a-simple-trick-to-handle-values-intuitively-50cb)
